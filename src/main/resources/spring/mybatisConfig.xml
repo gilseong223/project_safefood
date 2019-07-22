@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 이 환경 부분은 datasource가 관리하도록 했기 때문에 필요 없다. -->
+	<!-- <environments default="development"> <environment id="development"> 
+		<transactionManager type="JDBC" /> <dataSource type="POOLED"> <property name="driver" 
+		value="${driver}" /> <property name="url" value="${url}" /> <property name="username" 
+		value="${username}" /> <property name="password" value="${password}" /> </dataSource> 
+		</environment> </environments> -->
+
+	<!-- 이 부분도 따로 mapper를 만들었으므로 필요 없다. -->
+	<!-- <mappers> <mapper resource="org/mybatis/example/BlogMapper.xml" /> 
+		</mappers> -->
+
+	<typeAliases>
+		<typeAlias alias="member" type="edu.ssafy.root.member.Member" />
+		<typeAlias alias="member_detail" type="edu.ssafy.root.member.MemberDetail" />
+		<typeAlias alias="food" type="edu.ssafy.root.food.Food" />
+		<typeAlias alias="allergy" type="edu.ssafy.root.member.Allergy" />
+		<typeAlias alias="nutrient" type="edu.ssafy.root.food.Nutrient" />
+		<typeAlias alias="notice" type="edu.ssafy.root.notice.Notice"/>
+		<typeAlias alias="qna" type="edu.ssafy.root.qna.QNA"/>
+		<typeAlias alias="eatListDTO" type="edu.ssafy.root.member.eatListDTO"/>
+	</typeAliases>
+
+</configuration>

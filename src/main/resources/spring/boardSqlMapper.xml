@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!--   
+	private final String BOARD_INSERT = "insert into board(seq,title,writer,content,regDate,cnt) values(?,?,?,?,?,?)";
+	private final String BOARD_UPDATE = "update board set title=?, content=?, regDate=?, cnt=? where seq=?";
+	private final String BOARD_DELETE = "delete from board where seq=?";
+	private final String BOARD_LIST = "select seq,title,writer,content,regDate,cnt from board";
+	private final String BOARD_GET_BY_SEQ = "select seq,title,writer,content,regDate,cnt from board where seq=?";
+	private final String BOARD_GET_BY_TITLE = "select seq,title,writer,content,regDate,cnt from board where title like='%?%'";
+	private final String BOARD_GET_BY_AUTHOR = "select seq,title,writer,content,regDate,cnt from board where author like='%?%'";
+	private final String BOARD_SIZE = "select count(seq) as cnt from board";
+	private final String BOARD_UPCNT = "update board set cnt=? where seq=?";
+	
+   -->
+<mapper namespace="bo">
+	<insert id="insert" parameterType="board">
+		insert into board(seq,title,writer,content,regDate,cnt) 
+		values(
+			#{seq },
+			#{title },
+			#{writer },
+			#{content },
+			#{regDate },
+			#{cnt }
+		)
+	</insert>
+	
+	<update id="update" parameterType="board">
+		update board set title=#{title },
+						 content=#{content }, 
+						 regDate=#{regDate }, 
+						 cnt=#{cnt } 
+		where seq=#{seq }
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from board 
+		where seq=#{seq }
+	</delete>
+
+	<select id="getlist" resultType="board">
+		select seq,
+			   title,
+			   writer,
+			   content,
+			   regDate,
+			   cnt 
+		from board 
+	</select>
+	
+	<select id="getBySeq" resultType="board" parameterType="int">
+		select seq,
+			   title,
+			   writer,
+			   content,
+			   regDate,
+			   cnt 
+		from board 
+		where seq=#{seq }
+	</select>
+	
+	<select id="getByTitle" resultType="board" parameterType="string">
+		select seq,
+			   title,
+			   writer,
+			   content,
+			   regDate,
+			   cnt 
+		from board 
+		where title like='%#{title }%'
+	</select>
+	
+	<select id="getByWriter" resultType="board" parameterType="string">
+		select seq,
+			   title,
+			   writer,
+			   content,
+			   regDate,
+			   cnt 
+		from board 
+		where author like='%#{writer }%'
+	</select>
+	
+	<select id="size" resultType="int">
+		select count(seq) as cnt 
+		from board
+	</select>
+	
+	<select id="maxSeq" resultType="int">
+		select max(seq) as cnt 
+		from board
+	</select>
+	
+	<select id="getCnt" parameterType="int" resultType="int">
+		select cnt 
+		from board 
+		where seq=#{seq };
+	</select>
+	
+	<select id="upCnt" parameterType="board">
+		update board set cnt=#{cnt }
+		where seq=#{seq }
+	</select>
+</mapper>

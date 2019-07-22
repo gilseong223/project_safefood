@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+<mapper namespace="noti">
+	<select id="searchAll" resultType="notice">
+		select seq, mid, title, contents, time 
+		from notice
+		order by seq desc
+	</select>
+	<insert id='insertNotice' parameterType="notice">
+		insert into notice(mid, title, contents) 
+		values(
+			#{mid},
+			#{title},
+			#{contents}
+		)
+	</insert>
+	
+	<select id="search" resultType="notice" parameterType="string">
+		select seq, mid, title, contents, time
+		from notice
+		where seq=#{seq}
+	</select>
+	
+	<update id="updateNotice" parameterType="notice">
+		update notice
+		set title=#{title}, contents=#{contents}
+		where seq=#{seq}
+	</update>
+	
+	<delete id="deleteNotice" parameterType="string">
+		delete from notice
+		where seq=#{seq}
+	</delete>
+	
+	<select id="searchByTitle" parameterType="string" resultType="notice">
+		select seq, mid, title, contents, time
+		from notice
+		where title like CONCAT('%',#{title},'%')
+		order by seq desc
+	</select>
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+<mapper namespace="foody">
+	<select id="getlistall" resultType="food">
+		select *
+		from food
+	</select>
+	
+	<select id="getcount" resultType="int">
+		select count(fcode)
+		from food
+	</select>
+	
+	<select id="getfood" parameterType="int" resultType="food">
+		select *
+		from food
+		where fcode = #{fcode}
+	</select> 
+	
+	<select id="getdetail" parameterType="int" resultType="nutrient">
+		select nutrient1,nutrient2, nutrient3, nutrient4, nutrient5, nutrient6, nutrient7, nutrient8, nutrient9
+		from food
+		where fcode = #{fcode}
+	</select>
+	
+	<select id="getfoodbyname" parameterType="string" resultType="food">
+		select *
+		from food
+		where fname like CONCAT('%',#{keyword},'%')
+	</select>
+ 	
+	
+	<insert id="insert" parameterType="food">
+		insert into food values(
+			#{fcode},
+			#{mid},
+			#{date},
+			#{time},
+			#{cnt}
+		)
+	</insert>
+	
+	<update id="setAllergyList" parameterType="food">
+		update food 
+		set allergyList = #{allergyList} 
+		where fcode = #{fcode} 
+	</update>
+	
+	<select id="getMaxFcode" resultType="int">
+		select max(fcode)
+		from food;
+	</select>
+</mapper>

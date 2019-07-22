@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+<mapper namespace="qna">
+	<select id="searchAll" resultType="qna">
+		select seq, mid, category, title, question, answer, time 
+		from qna;
+	</select>
+	
+	<select id="searchByCategory" resultType="qna" parameterType="string">
+		select seq, mid, category, title, question, answer, time 
+		from qna 
+		where category = #{category};
+	</select>
+	
+	<select id="searchById" resultType="qna" parameterType="string">
+		select seq, mid, category, title, question, answer, time 
+		from qna 
+		where mid = #{mid};
+	</select>
+	
+	<insert id="regist" parameterType="qna">
+		insert into qna(mid,category,title,question) 
+		values(
+			#{mid},
+			#{category},
+			#{title},
+			#{question}
+		);
+	</insert>
+	
+	<insert id="registA" parameterType="qna">
+		update qna set answer = #{answer}
+				   where seq = #{seq};
+	</insert>
+	
+	<update id="updateQ" parameterType="qna">
+		update qna set title = #{title},
+					   category = #{category},
+					   question = #{question}
+				   where seq = #{seq};
+	</update>
+	
+	<update id="updateA" parameterType="qna">
+		update qna set answer = #{answer}
+				   where seq = #{seq};
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from qna 
+		where seq = #{seq};
+	</delete>
+</mapper>

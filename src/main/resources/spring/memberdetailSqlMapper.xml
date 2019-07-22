@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+<mapper namespace="memdetail">
+	<insert id="insert" parameterType="member_detail">
+		insert into member_detail values(
+			#{fcode},
+			#{mid},
+			#{date},
+			#{time},
+			#{cnt}
+		)
+	</insert>
+	
+	<select id="getlist" parameterType="string" resultType="member_detail">
+		select mid, date, time, cnt, fcode
+		from member_detail
+		where mid = #{mid}
+	</select>
+	
+	<delete id="delete" parameterType="string">
+		delete from member_detail 
+		where mid=#{mid}
+	</delete>
+	
+	<delete id="delete2" parameterType="member_detail">
+		delete from member_detail 
+		where mid=#{mid} 
+		and fcode=#{fcode}
+		and date=#{date}
+		and time=#{time}
+	</delete>
+	
+	<select id="sumeat" parameterType="string" resultType="double[]">
+		select cnt, nutrient1, nutrient2, nutrient3, nutrient4, nutrient5, nutrient6, nutrient7, nutrient8, nutrient9 
+		from member_detail md inner join food fd on md.fcode = fd.fcode 
+		where mid = #{mid}
+	</select>
+	
+	<select id="searchAddProduct" parameterType="member_detail" resultType="member_detail">
+		select fcode, mid, date, time, cnt 
+		from member_detail 
+		where fcode = #{fcode}
+		and mid = #{mid}
+		and date = #{date}
+		and time = #{time}
+	</select>
+</mapper>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+<mapper namespace="mem">
+	<resultMap id="searchId" type="member">
+		<result column="mid" property="ID" />
+		<result column="mpw" property="PW" />
+		<result column="mname" property="name" />
+		<result column="maddr" property="address" />
+		<result column="mphone" property="phone" />
+	</resultMap>
+
+	<!-- <select id="add" parameterType="member"> -->
+	<select id="add" parameterType="hashmap">
+		insert into member(mid,mpw,mname,maddr,mphone,allergy1,allergy2,allergy3,allergy4,allergy5,allergy6,allergy7,allergy8,allergy9,allergy10,allergy11,allergy12,allergy13,allergy14)
+		values(
+			#{ID},
+			#{PW},
+			#{name},
+			#{address},
+			#{phone},
+			#{allergy.allergy1},
+			#{allergy.allergy2},
+			#{allergy.allergy3},
+			#{allergy.allergy4},
+			#{allergy.allergy5},
+			#{allergy.allergy6},
+			#{allergy.allergy7},
+			#{allergy.allergy8},
+			#{allergy.allergy9},
+			#{allergy.allergy10},
+			#{allergy.allergy11},
+			#{allergy.allergy12},
+			#{allergy.allergy13},
+			#{allergy.allergy14}
+		);
+	</select>
+	<update id="modify" parameterType="map">
+		update member set mname=#{name},
+						  maddr=#{address},
+						  mphone=#{phone},
+						  allergy1=#{allergy.allergy1},
+						  allergy2=#{allergy.allergy2},
+						  allergy3=#{allergy.allergy3},
+						  allergy4=#{allergy.allergy4},
+						  allergy5=#{allergy.allergy5},
+						  allergy6=#{allergy.allergy6},
+						  allergy7=#{allergy.allergy7},
+						  allergy8=#{allergy.allergy8},
+						  allergy9=#{allergy.allergy9},
+						  allergy10=#{allergy.allergy10},
+						  allergy11=#{allergy.allergy11},
+						  allergy12=#{allergy.allergy12},
+						  allergy13=#{allergy.allergy13},
+						  allergy14=#{allergy.allergy14}
+		where mid=#{ID};
+	</update>
+	<delete id="delete" parameterType="string">
+		delete from member 
+		where mid=#{ID};
+	</delete>
+	
+	<select id="search" resultMap="searchId" parameterType="string">
+		select mid, mpw, mname, maddr, mphone 
+		from member
+		where mid=#{ID};
+	</select>
+	
+	<!-- <select id="search" resultType="member" parameterType="string">
+		select mid, mpw, mname, maddr, mphone, allergy1, allergy2, allergy3, allergy4, allergy5, allergy6, allergy7, allergy8, allergy9, allergy10, allergy11, allergy12, allergy13, allergy14
+		from member 
+		where mid=#{ID}
+	</select> -->
+	
+	<select id="searchAfter" resultType="allergy" parameterType="string">
+		select allergy1, allergy2, allergy3, allergy4, allergy5, allergy6, allergy7, allergy8, allergy9, allergy10, allergy11, allergy12, allergy13, allergy14
+		from member
+		where mid=#{ID};
+	</select>
+	
+	<select id="getSize" resultType="int">
+		select count(mid) 
+		from member;
+	</select>
+	<select id="getName" resultType="string" parameterType="string">
+		select mname 
+		from member 
+		where mid=#{ID};
+	</select>
+	<insert id="addProduct" parameterType="member">
+		update member_detail set 
+		where mid=#{ID};
+	</insert>
+	<select id="searchAll" resultMap="searchId">
+		select mid, mpw, mname, maddr, mphone
+		from member;
+	</select>
+	
+	
+	<resultMap id="eatListMap" type="eatListDTO">
+		<result column="mid" property="mid" />
+		<result column="date" property="date" />
+		<result column="time" property="time" />
+		<result column="cnt" property="cnt" />
+		<result column="fcode" property="fcode" />
+		<result column="fname" property="fname" />
+	</resultMap>
+	<select id="eatList" resultMap="eatListMap" parameterType="string">
+		select mid, 
+			   date, 
+			   time, 
+			   cnt, 
+			   m.fcode,
+			   fname 
+		from member_detail as m inner join food as f on m.fcode = f.fcode
+		where mid = #{ID};
+	</select>
+	
+	
+	
+	<delete id="deleteEatFood" parameterType="member_detail">
+		delete from member_detail 
+		where mid=#{mid} and fcode=#{fcode} and time = #{time} and date=#{date};
+	</delete>
+	<select id="sumEat" parameterType="string" resultType="double">
+		select cnt, 
+			   nutrient1, 
+			   nutrient2, 
+			   nutrient3, 
+			   nutrient4, 
+			   nutrient5, 
+			   nutrient6, 
+			   nutrient7, 
+			   nutrient8, 
+			   nutrient9 
+		from member_detail md inner join food fd on md.fcode = fd.fcode 
+		where mid = #{ID};
+	</select>
+	
+	<select id="eatAll" resultType="member_detail">
+		select mid, date, time, fcode
+		from member_detail;
+	</select>
+
+</mapper>
